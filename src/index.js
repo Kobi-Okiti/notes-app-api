@@ -33,6 +33,21 @@ app.get("/notes", async (req, res) => {
   }
 });
 
+// Fetch specific Note
+app.get('/notes/:id', async (req, res) => {
+    const id = req.params.id;
+    try{
+        const notes = await Note.findById(req.params.id);
+
+        if(!notes){
+            return res.status(404).send();
+        }
+        res.send(notes);
+    } catch (e) {
+        res.status(500).send(e);
+    }
+})
+
 // UPDATE
 app.patch("/notes/:id", async (req, res) => {
   try {
